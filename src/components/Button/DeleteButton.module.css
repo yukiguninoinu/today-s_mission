@@ -1,0 +1,34 @@
+.round_btn {
+  margin-left: auto;
+  display: block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* 丸みの度合い */
+  background: #fff; /* ボタンの背景色 */
+}
+
+.round_btn::before,
+.round_btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.5px; /* 棒の幅（太さ） */
+  height: 18px; /* 棒の高さ */
+  border-radius: 2px;
+  background: #333; /* バツ印の色 */
+}
+
+.round_btn::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.round_btn::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.round_btn:hover {
+  cursor: pointer;
+  border: 1.5px solid #aaa; /* ボタンの枠線 */
+}

@@ -1,0 +1,52 @@
+.TodoArea {
+  margin-right: 25px;
+  text-align: left;
+  padding: 20px;
+  background-color: #9fe7f5;
+  width: 680px;
+  height: 85%;
+  border-radius: 10px;
+}
+
+.TodoTitle {
+  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
+  padding: 40px 70px 50px 70px;
+}
+
+.ListItem {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  column-gap: 15px;
+  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px;
+  margin-left: 70px;
+}
+
+.checkbox {
+  appearance: none;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.ItemText {
+  margin-right: 20px;
+}
+
+.DoneArea {
+  min-height: 80px;
+}
+
+.Main hr {
+  margin: 50px 30px 20px 30px;
+  width: 90%;
+  height: 2px;
+  background-color: #aaa;
+  border: none;
+}

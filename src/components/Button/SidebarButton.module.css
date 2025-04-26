@@ -1,0 +1,35 @@
+.plus_btn {
+  display: block;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* 丸みの度合い */
+  background: #9fe7f5; /* ボタンの背景色 */
+}
+
+.plus_btn::before,
+.plus_btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.5px; /* 棒の幅（太さ） */
+  height: 18px; /* 棒の高さ */
+  border-radius: 2px;
+  background: #333; /* バツ印の色 */
+  transform: translate(-50%, -50%);
+}
+
+.plus_btn::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.plus_btn:hover {
+  cursor: pointer;
+  background-color: #053f5c;
+}
+
+.plus_btn:hover::before,
+.plus_btn:hover::after {
+  background-color: #fff;
+}

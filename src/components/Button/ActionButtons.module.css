@@ -1,0 +1,15 @@
+.Action_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 30px;
+  border-radius: 35px;
+  background: #429ebd;
+  font-size: 13px;
+}
+
+.Action_btn:hover {
+  cursor: pointer;
+  border: 1.5px solid #000;
+}

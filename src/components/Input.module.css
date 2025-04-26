@@ -1,0 +1,59 @@
+.InputArea {
+  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
+  text-align: left;
+  padding: 20px;
+  background-color: #9fe7f5;
+  width: 300px;
+  height: 85%;
+  border-radius: 10px;
+}
+
+.InputTitle {
+  padding: 40px 30px 50px 30px;
+}
+
+.InputArea label {
+  margin-left: 30px;
+  font-size: 14px;
+  color: #000;
+}
+
+.InputTodo {
+  margin: 0px 30px 15px 30px;
+  width: 200px;
+  display: flex;
+  text-align: left;
+  column-gap: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+}
+
+.InputPriority {
+  margin: 0px 30px 15px 30px;
+  width: 200px;
+  display: flex;
+  text-align: left;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+}
+
+.InputMemo {
+  margin: 0px 30px 15px 30px;
+  width: 200px;
+  display: flex;
+  text-align: left;
+  column-gap: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+}
+
+.InputButtonArea {
+  margin-top: 30px;
+  margin-left: 30px;
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+}

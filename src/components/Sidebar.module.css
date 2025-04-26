@@ -1,0 +1,71 @@
+.Sidebar {
+  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
+  width: 220px;
+  height: 100vh;
+  margin-right: 50px;
+}
+
+.Sidebar h2 {
+  position: relative;
+  display: inline-block;
+  width: 220px;
+  height: 150px;
+  margin-bottom: 70px;
+  padding: 10px;
+  border-radius: 9999px;
+  background-color: #9fe7f5;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.Sidebar h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  border-style: solid;
+  border-width: 20px 0 0 20px;
+  border-color: #9fe7f5 transparent transparent;
+  translate: -50% 100%;
+}
+
+.Sidebar ul {
+  width: 220px;
+}
+
+.Sidebar li {
+  list-style: none;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.Sidebar li button {
+  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  list-style: none;
+  width: 220px;
+  height: 50px;
+  padding: 10px;
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: #053f5c;
+  border-radius: 35px;
+  border: none;
+}
+.Sidebar li button:hover {
+  cursor: pointer;
+  color: #000;
+  background-color: #9fe7f5;
+}
