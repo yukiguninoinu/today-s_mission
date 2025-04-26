@@ -1,8 +1,14 @@
+import { Input } from "@/components/Input";
+import { Main } from "@/components/Main";
+import { Sidebar } from "@/components/Sidebar";
+import Style from "./page.module.css";
+
 export default function Home() {
   return (
-    <div className="loginPage">
-      <h1>Today`s Mission</h1>
-      <h2>今日のミッションを上手に管理して、素敵な1日にしよう!</h2>
+    <div className={Style.MainPage}>
+      <Sidebar />
+      <Main />
+      <Input />
     </div>
   );
 }
