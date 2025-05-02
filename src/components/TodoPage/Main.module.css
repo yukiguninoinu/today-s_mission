@@ -9,7 +9,6 @@
 }
 
 .TodoTitle {
-  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
   padding: 40px 70px 50px 70px;
 }
 
@@ -18,7 +17,6 @@
   align-items: center;
   text-align: left;
   column-gap: 15px;
-  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
   font-size: 16px;
   font-weight: 500;
   padding: 8px;

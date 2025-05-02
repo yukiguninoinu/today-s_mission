@@ -1,0 +1,21 @@
+.symbol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+}
+
+.line1 {
+  width: 220px;
+  height: 50px;
+  background-color: #053f5c;
+  border-radius: 999px;
+}
+.line {
+  width: 200px;
+  height: 35px;
+  margin-top: 4px;
+  background-color: #9fe7f5;
+  border-radius: 999px;
+}

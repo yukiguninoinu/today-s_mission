@@ -1,6 +1,6 @@
 import React from "react";
 import Styles from "./Sidebar.module.css";
-import { Button } from "./Button/SidebarButton";
+import { Button } from "../Button/SidebarButton";
 
 export function Sidebar() {
   return (

@@ -1,5 +1,4 @@
 .Sidebar {
-  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
   width: 220px;
   height: 100vh;
   margin-right: 50px;
@@ -46,7 +45,6 @@
 }
 
 .Sidebar li button {
-  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
   font-size: 15px;
   font-weight: 500;
   color: #fff;

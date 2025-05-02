@@ -1,8 +1,14 @@
-export default function Home() {
+import { Main } from "@/components/TodoPage/Main";
+import { Sidebar } from "@/components/TodoPage/Sidebar";
+import Style from "./page.module.css";
+import { Input } from "@/components/TodoPage/Input";
+
+export default function TodoPage() {
   return (
-    <div className="loginPage">
-      <h1>Today`s Mission</h1>
-      <h2>今日のミッションを上手に管理して、素敵な1日にしよう!</h2>
+    <div className={Style.MainPage}>
+      <Sidebar />
+      <Main />
+      <Input />
     </div>
   );
 }

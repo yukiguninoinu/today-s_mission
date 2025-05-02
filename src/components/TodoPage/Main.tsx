@@ -1,7 +1,7 @@
 import React from "react";
 import Style from "./Main.module.css";
-import { Button } from "./Button/DeleteButton";
-import { ActionButton } from "./Button/ActionButtons";
+import { Button } from "../Button/DeleteButton";
+import { ActionButton } from "../Button/ActionButtons";
 
 export function Main() {
   return (
