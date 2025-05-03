@@ -3,11 +3,13 @@ import React from "react";
 import { useState } from "react";
 import styles from "./SignUpForm.module.css";
 import FormButton from "../Button/FormButtons";
+import { useRouter } from "next/navigation";
 
 export function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +28,8 @@ export function SignUpForm() {
 
       console.log("✅ ユーザー登録成功:", data);
       // 必要に応じて遷移やメッセージ表示
+
+      router.push("/");
     } catch (error: any) {
       console.error("❌ サインアップ失敗:", error.message);
       // エラーメッセージの表示処理など
