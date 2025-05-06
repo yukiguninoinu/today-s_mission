@@ -1,0 +1,46 @@
+.LoginPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.PageLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 100vh;
+  background-color: #429ebd;
+}
+
+.PageLeft h1 {
+  font-size: 2.5rem;
+  color: #000;
+  margin-bottom: 20px;
+}
+.PageLeft h3 {
+  font-size: 1.1rem;
+  color: #000;
+  margin-top: 3px;
+}
+
+.PageRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
