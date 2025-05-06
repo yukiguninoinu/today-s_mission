@@ -1,12 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-import { Database } from "@/lib/database.types";
-
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // 注意：Service Role Keyは.env.server側のみ
-);
+import { supabase } from "../../../../lib/supabaseClient";
 
 export async function POST(req: Request) {
   const { email, password, nickname } = await req.json();
@@ -19,29 +12,33 @@ export async function POST(req: Request) {
   }
 
   try {
-    // ユーザー作成
-    const { data: signUpData, error: signUpError } = await supabase.auth.admin.createUser({
-      email,
-      password,
-      email_confirm: true,
+    // ユーザー登録
+    const { data: auth, error: authError } = await supabase.auth.signUp({
+      email: email,
+      password: password,
     });
 
-    if (signUpError) throw signUpError;
-    const userId = signUpData.user?.id;
+    if (authError) throw authError;
+    const userId = auth.user?.id;
 
     // プロフィール作成
-    const { error: profileError } = await supabase.from("profiles").insert([
-      {
-        id: userId,
-        nickname: nickname,
-      },
-    ]);
+    const { error: profileError } = await supabase.from("profiles").insert({
+      id: userId,
+      nickname: nickname,
+  });
 
     if (profileError) throw profileError;
 
     return NextResponse.json({ message: "ユーザー登録成功" }, { status: 201 });
   } catch (error: any) {
     console.error("エラー:", error.message);
-    return NextResponse.json({ message: "登録エラー", error: error.message }, { status: 500 });
+    // return NextResponse.json({ message: "登録エラー", error: error.message }, { status: 500 });
+    let message = "登録エラー";
+    if (error.message.includes("User already registered")) {
+      message = "すでにアカウントをお持ちです";
+      return NextResponse.json({ message }, { status: 400 });
+    }
+
+    return NextResponse.json({ message, error: error.message }, { status: 500 });
   }
 }
