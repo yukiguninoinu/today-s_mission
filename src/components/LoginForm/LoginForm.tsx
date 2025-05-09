@@ -26,12 +26,31 @@ export function LoginForm() {
       return;
     }
 
+    // ログイン成功後にセッションを取得
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    console.log("ログイン中のセッション:", session);
+    if (session?.user) {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("nickname")
+        .eq("id", session.user.id)
+        .single();
+
+      if (!error) {
+        console.log("ニックネーム:", profile.nickname);
+        // ここでstateに保存して画面に表示など
+      }
+    }
+
     router.push("/"); // ログイン成功後に遷移
   };
 
   return (
     <form className={styles.form} onSubmit={handleLogin}>
-      <h2>ログイン</h2>
+      <h2>Today`s Mission</h2>
+      <h3>ログインして始めよう！</h3>
       <input
         type="email"
         placeholder="メールアドレス"
