@@ -5,6 +5,7 @@ export type Todo = {
     note: string;
     priority: string;
     created_at: string;
-    list_id: string; // 必須！
+    list_id: string;
+    is_done: boolean;
   };
   
