@@ -67,3 +67,10 @@
   color: #000;
   background-color: #9fe7f5;
 }
+
+.messege {
+  font-size: 16px;
+  margin-top: 30px;
+  text-align: center;
+  color: #555;
+}

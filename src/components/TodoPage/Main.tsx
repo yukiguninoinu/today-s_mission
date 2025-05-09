@@ -85,7 +85,18 @@ export function Main({
     deleteList(selectedListId); // 親から渡された関数でリストを削除
   };
 
-  const activeTodos = todos.filter((todo) => !todo.is_done);
+  const priorityOrder: Record<string, number> = {
+    高い: 3,
+    普通: 2,
+    低い: 1,
+  };
+
+  const activeTodos = todos
+    .filter((todo) => !todo.is_done)
+    .sort(
+      (a: Todo, b: Todo) =>
+        priorityOrder[b.priority] - priorityOrder[a.priority]
+    );
 
   // 完了したTODOリスト（is_done === true）
   const doneTodos = todos.filter((todo) => todo.is_done);
@@ -118,10 +129,10 @@ export function Main({
                     label="編集"
                   />
                   {/* 削除ボタンをActionButtonに置き換え */}
-                  <ActionButton
+                  {/* <ActionButton
                     onClick={() => handleDeleteTodo(todo.id)}
                     label="削除"
-                  />
+                  /> */}
                 </div>
               </li>
             ))
@@ -142,8 +153,8 @@ export function Main({
                 <s>{todo.title}</s> {/* 完了タスクは取り消し線 */}
                 <div className={Style.TodoButtons}>
                   <ActionButton
-                    onClick={() => handleDeleteTodo(todo.id)}
-                    label="削除"
+                    onClick={() => setSelectedTodo(todo)}
+                    label="編集"
                   />
                 </div>
               </li>
