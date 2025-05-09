@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import React, { useEffect } from "react";
 import Style from "./Main.module.css";
 import { supabase } from "../../../lib/supabaseClient";
@@ -13,6 +14,7 @@ type MainProps = {
   selectedListName: string;
   setSelectedTodo: (todo: Todo | null) => void;
   deleteList: (listId: string) => void; // リスト削除のための関数
+  refreshLists: () => Promise<void>;
 };
 
 export function Main({
@@ -22,6 +24,7 @@ export function Main({
   selectedListName,
   setSelectedTodo,
   deleteList, // 親から渡されたリスト削除関数
+  refreshLists,
 }: MainProps) {
   useEffect(() => {
     if (selectedListId) {
@@ -73,7 +76,7 @@ export function Main({
     } else {
       // localStateのtodosを更新
       setTodos((prev) =>
-        prev.map((t) => (t.id === todo.id ? { ...t, is_done: updated } : t))
+        prev.map((t) => (t.id === todo.id ? { ...t, is_done: updated } : t)),
       );
     }
   };
@@ -95,18 +98,56 @@ export function Main({
     .filter((todo) => !todo.is_done)
     .sort(
       (a: Todo, b: Todo) =>
-        priorityOrder[b.priority] - priorityOrder[a.priority]
+        priorityOrder[b.priority] - priorityOrder[a.priority],
     );
 
   // 完了したTODOリスト（is_done === true）
   const doneTodos = todos.filter((todo) => todo.is_done);
+
+  // Mainコンポーネント内
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(selectedListName);
+
+  useEffect(() => {
+    setEditTitle(selectedListName); // selectedListName が変わったら同期
+  }, [selectedListName]);
+
+  const handleTitleUpdate = async () => {
+    const { error } = await supabase
+      .from("lists") // リストのテーブル名
+      .update({ name: editTitle })
+      .eq("id", selectedListId);
+
+    if (error) {
+      console.error("タイトル更新エラー:", error.message);
+    } else {
+      setIsEditing(false);
+      refreshLists();
+    }
+  };
 
   return (
     <div className={Style.Main}>
       <div className={Style.TodoArea}>
         {/* リスト削除ボタン */}
         <DeleteButton onClick={handleDeleteList} />
-        <h2 className={Style.TodoTitle}>{selectedListName}</h2>
+        {/* <h2 className={Style.TodoTitle}>{selectedListName}</h2> */}
+        {isEditing ? (
+          <div className={Style.EditTitle}>
+            <input
+              type="text"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+            />
+            <button onClick={handleTitleUpdate}>保存</button>
+            <button onClick={() => setIsEditing(false)}>キャンセル</button>
+          </div>
+        ) : (
+          <h2 className={Style.TodoTitle} onClick={() => setIsEditing(true)}>
+            {selectedListName}
+          </h2>
+        )}
+
         <ul>
           {activeTodos.length === 0 ? (
             <p className={Style.messege}>タスクはありません</p>
@@ -128,11 +169,6 @@ export function Main({
                     onClick={() => setSelectedTodo(todo)}
                     label="編集"
                   />
-                  {/* 削除ボタンをActionButtonに置き換え */}
-                  {/* <ActionButton
-                    onClick={() => handleDeleteTodo(todo.id)}
-                    label="削除"
-                  /> */}
                 </div>
               </li>
             ))

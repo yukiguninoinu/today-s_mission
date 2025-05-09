@@ -16,10 +16,6 @@ export function Sidebar({
 }: SidebarProps) {
   const [lists, setLists] = useState<{ id: string; name: string }[]>([]);
 
-  useEffect(() => {
-    fetchLists();
-  }, []);
-
   const fetchLists = async () => {
     const {
       data: { session },
@@ -38,6 +34,10 @@ export function Sidebar({
       setLists(data);
     }
   };
+
+  useEffect(() => {
+    fetchLists();
+  }, []);
 
   const initialMessage = "あなたはできる！";
 
@@ -67,4 +67,27 @@ export function Sidebar({
       </ul>
     </div>
   );
+}
+
+export async function fetchSidebarLists(
+  setLists: React.Dispatch<
+    React.SetStateAction<{ id: string; name: string }[]>
+  >,
+) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user?.id;
+  if (!userId) return;
+
+  const { data, error } = await supabase
+    .from("lists")
+    .select("id, name")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("リスト取得エラー:", error.message);
+  } else if (data) {
+    setLists(data);
+  }
 }

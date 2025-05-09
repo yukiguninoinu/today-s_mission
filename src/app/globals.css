@@ -7,7 +7,9 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
+  font-family:
+    Hiragino Maru Gothic ProN W4,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #171717;

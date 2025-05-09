@@ -13,6 +13,7 @@ export default function TodoPage() {
   const [selectedListId, setSelectedListId] = useState<string>("");
   const [selectedListName, setSelectedListName] = useState<string>("");
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
+  const [lists, setLists] = useState<{ id: string; name: string }[]>([]);
 
   const handleListSelect = (id: string, name: string) => {
     setSelectedListId(id);
@@ -59,6 +60,25 @@ export default function TodoPage() {
     // リスト削除後、サイドバーや他のUIを更新する処理を追加する場合もある
   };
 
+  const fetchLists = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    const userId = session?.user?.id;
+    if (!userId) return;
+
+    const { data, error } = await supabase
+      .from("lists")
+      .select("id, name")
+      .eq("user_id", userId);
+
+    if (error) {
+      console.error("リスト取得エラー:", error.message);
+    } else {
+      setLists(data);
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -74,6 +94,7 @@ export default function TodoPage() {
           setSelectedTodo={setSelectedTodo}
           deleteList={deleteList}
           selectedListName={selectedListName}
+          refreshLists={fetchLists}
         />
         <Input
           selectedListId={selectedListId}
