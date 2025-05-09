@@ -38,7 +38,7 @@ export function Input({
 
   const handleSubmit = async () => {
     if (!title.trim()) {
-      alert("タイトルを入力してください");
+      alert("TODOを入力してください");
       return;
     }
 
@@ -108,12 +108,12 @@ export function Input({
         {selectedTodo ? "TODOを編集" : "NEW TODO"}
       </h2>
 
-      <label htmlFor="inputtitle">タイトル</label>
+      <label htmlFor="inputtitle">TODO</label>
       <input
         id="inputtitle"
         type="text"
         className={Style.InputTodo}
-        placeholder="TODOのタイトル"
+        placeholder="TODOを入力"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />

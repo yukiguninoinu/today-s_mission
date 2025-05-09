@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Styles from "./Sidebar.module.css";
 import { SidebarButton } from "../Button/SidebarButton";
 import { supabase } from "../../../lib/supabaseClient";
+import { Message } from "./Messages";
 
 type SidebarProps = {
   setSelectedListId: (id: string) => void;
@@ -38,13 +39,17 @@ export function Sidebar({
     }
   };
 
+  const initialMessage = "あなたはできる！";
+
   return (
     <div className={Styles.Sidebar}>
-      <h2>今日も頑張ろう！</h2>
+      <div>
+        <Message initialMessage={initialMessage} />
+      </div>
       <SidebarButton onAdd={() => {}} />
       <ul>
         {lists.length === 0 ? (
-          <p>リストがありません</p>
+          <p className={Styles.messege}>リストがありません</p>
         ) : (
           lists.map((list) => (
             <li key={list.id}>
