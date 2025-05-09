@@ -39,7 +39,7 @@ export function SignUpForm() {
       console.log("✅ ユーザー登録成功:", data);
       // 必要に応じて遷移やメッセージ表示
 
-      router.push("/"); // サインアップ成功後にログインページへ遷移
+      router.push("/login"); // サインアップ成功後にログインページへ遷移
     } catch (error: any) {
       console.error("❌ サインアップ失敗:", error.message);
       // エラーメッセージの表示処理など

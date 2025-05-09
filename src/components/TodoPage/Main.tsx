@@ -4,6 +4,7 @@ import Style from "./Main.module.css";
 import { supabase } from "../../../lib/supabaseClient";
 import { DeleteButton } from "../Button/DeleteButton"; // このボタンを使用してリスト削除
 import { Todo } from "./Types/todo";
+import { ActionButton } from "../Button/ActionButtons"; // 削除ボタンのスタイルを使用
 
 type MainProps = {
   todos: Todo[];
@@ -39,7 +40,9 @@ export function Main({
     if (error) {
       console.error("TODO取得エラー:", error.message);
     } else {
-      setTodos(data || []);
+      // 優先順位でソート (降順)
+      const sortedData = data?.sort((a, b) => b.priority - a.priority);
+      setTodos(sortedData || []);
     }
   };
 
@@ -55,12 +58,37 @@ export function Main({
     fetchTodos(selectedListId);
   };
 
+  // タスクの完了状態を切り替え
+  const handleToggleDone = async (todo: Todo) => {
+    const updated = !todo.is_done;
+
+    // supabaseでis_doneを更新
+    const { error } = await supabase
+      .from("todo")
+      .update({ is_done: updated })
+      .eq("id", todo.id);
+
+    if (error) {
+      console.error("完了状態更新エラー:", error.message);
+    } else {
+      // localStateのtodosを更新
+      setTodos((prev) =>
+        prev.map((t) => (t.id === todo.id ? { ...t, is_done: updated } : t))
+      );
+    }
+  };
+
   // リスト削除
   const handleDeleteList = () => {
     if (!selectedListId) return;
 
     deleteList(selectedListId); // 親から渡された関数でリストを削除
   };
+
+  const activeTodos = todos.filter((todo) => !todo.is_done);
+
+  // 完了したTODOリスト（is_done === true）
+  const doneTodos = todos.filter((todo) => todo.is_done);
 
   return (
     <div className={Style.Main}>
@@ -69,18 +97,54 @@ export function Main({
         <DeleteButton onClick={handleDeleteList} />
         <h2 className={Style.TodoTitle}>{selectedListName}</h2>
         <ul>
-          {todos.length === 0 ? (
-            <p>TODOリストはありません</p>
+          {activeTodos.length === 0 ? (
+            <p className={Style.messege}>タスクはありません</p>
           ) : (
-            todos.map((todo) => (
+            activeTodos.map((todo) => (
               <li key={todo.id} className={Style.TodoItem}>
-                <strong>{todo.title}</strong>（優先度: {todo.priority}）<br />
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={todo.is_done}
+                    onChange={() => handleToggleDone(todo)} // チェックボックスで完了状態を切り替える
+                  />
+                  <strong>{todo.title}</strong>（優先度: {todo.priority}）{" "}
+                </label>
+                <br />
                 <small>{todo.note}</small>
                 <div className={Style.TodoButtons}>
-                  <button onClick={() => setSelectedTodo(todo)}>編集</button>
-                  <button onClick={() => handleDeleteTodo(todo.id)}>
-                    削除
-                  </button>
+                  <ActionButton
+                    onClick={() => setSelectedTodo(todo)}
+                    label="編集"
+                  />
+                  {/* 削除ボタンをActionButtonに置き換え */}
+                  <ActionButton
+                    onClick={() => handleDeleteTodo(todo.id)}
+                    label="削除"
+                  />
+                </div>
+              </li>
+            ))
+          )}
+        </ul>
+        <hr />
+        <ul>
+          {doneTodos.length === 0 ? (
+            <p className={Style.messege}>完了タスクはありません</p>
+          ) : (
+            doneTodos.map((todo) => (
+              <li key={todo.id} className={Style.TodoItem}>
+                <input
+                  type="checkbox"
+                  checked={todo.is_done}
+                  onChange={() => handleToggleDone(todo)} // チェックボックスで完了状態を切り替える
+                />
+                <s>{todo.title}</s> {/* 完了タスクは取り消し線 */}
+                <div className={Style.TodoButtons}>
+                  <ActionButton
+                    onClick={() => handleDeleteTodo(todo.id)}
+                    label="削除"
+                  />
                 </div>
               </li>
             ))
