@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   if (!email || !password || !nickname) {
     return NextResponse.json(
       { message: "すべての項目を入力してください" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     if (!userId) {
       return NextResponse.json(
         { message: "ユーザーIDの取得に失敗しました" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -46,6 +46,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ message }, { status: 400 });
     }
 
-    return NextResponse.json({ message, error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message, error: error.message },
+      { status: 500 },
+    );
   }
 }

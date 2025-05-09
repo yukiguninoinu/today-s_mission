@@ -50,7 +50,7 @@ export function Header() {
           setIsLoggedIn(false);
           setNickname("");
         }
-      }
+      },
     );
 
     // 🧹 クリーンアップ（アンマウント時）

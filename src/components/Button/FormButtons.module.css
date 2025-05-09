@@ -7,7 +7,9 @@
   border: none;
   border-radius: 35px;
   cursor: pointer;
-  font-family: Hiragino Maru Gothic ProN W4, sans-serif;
+  font-family:
+    Hiragino Maru Gothic ProN W4,
+    sans-serif;
 }
 
 .button:hover {
