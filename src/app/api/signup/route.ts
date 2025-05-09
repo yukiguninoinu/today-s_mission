@@ -14,25 +14,32 @@ export async function POST(req: Request) {
   try {
     // ユーザー登録
     const { data: auth, error: authError } = await supabase.auth.signUp({
-      email: email,
-      password: password,
+      email,
+      password,
     });
 
     if (authError) throw authError;
-    const userId = auth.user?.id;
 
-    // プロフィール作成
+    const userId = auth.user?.id || auth.session?.user?.id;
+    if (!userId) {
+      return NextResponse.json(
+        { message: "ユーザーIDの取得に失敗しました" },
+        { status: 500 }
+      );
+    }
+
+    // プロフィール挿入
     const { error: profileError } = await supabase.from("profiles").insert({
       id: userId,
       nickname: nickname,
-  });
+    });
 
     if (profileError) throw profileError;
 
     return NextResponse.json({ message: "ユーザー登録成功" }, { status: 201 });
   } catch (error: any) {
     console.error("エラー:", error.message);
-    // return NextResponse.json({ message: "登録エラー", error: error.message }, { status: 500 });
+
     let message = "登録エラー";
     if (error.message.includes("User already registered")) {
       message = "すでにアカウントをお持ちです";
