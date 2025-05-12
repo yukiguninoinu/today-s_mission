@@ -143,7 +143,7 @@ export function Input({
 
       <div className={Style.InputButtonArea}>
         <ActionButton
-          label="キャンセル"
+          label={selectedTodo ? "キャンセル" : "リセット"}
           onClick={() => {
             setSelectedTodo(null); // 編集キャンセル
             setTitle("");
