@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import React, { useEffect } from "react";
 import Style from "./Main.module.css";
 import { supabase } from "../../../lib/supabaseClient";
@@ -12,9 +12,10 @@ type MainProps = {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   selectedListId: string;
   selectedListName: string;
+  setSelectedListName: Dispatch<SetStateAction<string>>;
   setSelectedTodo: (todo: Todo | null) => void;
   deleteList: (listId: string) => void; // リスト削除のための関数
-  refreshLists: () => Promise<void>;
+  fetchLists: () => Promise<void>;
 };
 
 export function Main({
@@ -22,9 +23,10 @@ export function Main({
   setTodos,
   selectedListId,
   selectedListName,
+  setSelectedListName,
   setSelectedTodo,
   deleteList, // 親から渡されたリスト削除関数
-  refreshLists,
+  fetchLists,
 }: MainProps) {
   useEffect(() => {
     if (selectedListId) {
@@ -122,7 +124,8 @@ export function Main({
       console.error("タイトル更新エラー:", error.message);
     } else {
       setIsEditing(false);
-      refreshLists();
+      setSelectedListName(editTitle);
+      fetchLists();
     }
   };
 

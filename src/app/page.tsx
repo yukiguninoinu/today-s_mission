@@ -94,7 +94,8 @@ export default function TodoPage() {
           setSelectedTodo={setSelectedTodo}
           deleteList={deleteList}
           selectedListName={selectedListName}
-          refreshLists={fetchLists}
+          setSelectedListName={setSelectedListName}
+          fetchLists={fetchLists}
         />
         <Input
           selectedListId={selectedListId}
