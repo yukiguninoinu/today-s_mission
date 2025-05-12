@@ -1,13 +1,14 @@
 "use client";
+
 import React from "react";
 import Style from "./SidebarButton.module.css";
 import { supabase } from "../../../lib/supabaseClient";
 
 type SidebarButtonProps = {
-  onAdd: (newList: { id: string; name: string }) => void;
+  fetchLists: () => Promise<void>;
 };
 
-export function SidebarButton({ onAdd }: SidebarButtonProps) {
+export function SidebarButton({ fetchLists }: SidebarButtonProps) {
   const handleClick = async () => {
     const name = prompt("新しいリスト名を入力してください");
     if (!name) return;
@@ -19,7 +20,7 @@ export function SidebarButton({ onAdd }: SidebarButtonProps) {
     const userId = session?.user?.id;
     if (!userId) return;
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("lists")
       .insert([{ name, user_id: userId }])
       .select()
@@ -30,7 +31,7 @@ export function SidebarButton({ onAdd }: SidebarButtonProps) {
       return;
     }
 
-    onAdd({ id: data.id, name: data.name });
+    fetchLists();
   };
 
   return (

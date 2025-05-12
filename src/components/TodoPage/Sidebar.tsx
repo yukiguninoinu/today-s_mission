@@ -1,44 +1,23 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
 import Styles from "./Sidebar.module.css";
 import { SidebarButton } from "../Button/SidebarButton";
 import { supabase } from "../../../lib/supabaseClient";
 import { Message } from "./Messages";
 
 type SidebarProps = {
+  lists: { id: string; name: string }[];
+  fetchLists: () => Promise<void>;
   setSelectedListId: (id: string) => void;
   setSelectedListName: (name: string) => void;
 };
 
 export function Sidebar({
+  lists,
+  fetchLists,
   setSelectedListId,
   setSelectedListName,
 }: SidebarProps) {
-  const [lists, setLists] = useState<{ id: string; name: string }[]>([]);
-
-  const fetchLists = async () => {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    const userId = session?.user?.id;
-    if (!userId) return;
-
-    const { data, error } = await supabase
-      .from("lists")
-      .select("id, name")
-      .eq("user_id", userId);
-
-    if (error) {
-      console.error("リスト取得エラー:", error.message);
-    } else if (data) {
-      setLists(data);
-    }
-  };
-
-  useEffect(() => {
-    fetchLists();
-  }, []);
-
   const initialMessage = "あなたはできる！";
 
   return (
@@ -46,7 +25,7 @@ export function Sidebar({
       <div>
         <Message initialMessage={initialMessage} />
       </div>
-      <SidebarButton onAdd={() => {}} />
+      <SidebarButton fetchLists={fetchLists} />
       <ul>
         {lists.length === 0 ? (
           <p className={Styles.messege}>リストがありません</p>
