@@ -86,10 +86,15 @@ export function Input({
   const handleDelete = async () => {
     if (!selectedTodo) return;
 
+    const confirmDelete = window.confirm("このTODOを本当に削除しますか？");
+
+    if (!confirmDelete) return;
+
     const { error } = await supabase
       .from("todo")
       .delete()
       .eq("id", selectedTodo.id);
+
     if (error) {
       console.error("TODO削除失敗:", error.message);
       return;

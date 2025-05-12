@@ -81,11 +81,14 @@ export function Main({
     }
   };
 
-  // リスト削除
   const handleDeleteList = () => {
     if (!selectedListId) return;
 
-    deleteList(selectedListId); // 親から渡された関数でリストを削除
+    const confirmDelete = window.confirm("本当にこのリストを削除しますか？");
+
+    if (!confirmDelete) return;
+
+    deleteList(selectedListId);
   };
 
   const priorityOrder: Record<string, number> = {
