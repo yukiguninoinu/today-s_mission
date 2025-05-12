@@ -67,6 +67,11 @@ export function LoginForm() {
       />
       <FormButton>ログイン</FormButton>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      <p className={styles.signUpLink}>
+        まだアカウントをお持ちでないですか？
+        <br />
+        <a href="/signup">サインアップはこちら</a>
+      </p>
     </form>
   );
 }

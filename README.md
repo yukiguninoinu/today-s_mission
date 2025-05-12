@@ -35,7 +35,8 @@ https://today-s-mission.vercel.app/
 
 ①ログイン\
 ②左側の＋ボタンでリストの新規作成\
-③NEW TODO’でTODOアイテムを追加
+③NEW TODO’でTODOアイテムを追加\
+＊ログインをしないとリストが作成できません。
 
 ### 使用技術
 

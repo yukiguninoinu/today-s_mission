@@ -32,20 +32,19 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
-.submitButton {
-  font-size: 16px;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.signUpLink {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
 }
 
-.submitButton:hover {
-  background: #43a047;
+.signUpLink a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: blue;
+  text-decoration: underline;
 }
-
 .form .error {
   color: red;
   font-size: 0.8rem;
