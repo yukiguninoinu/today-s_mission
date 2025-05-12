@@ -2,7 +2,7 @@
 
 ### 概要
 
-**シンプルなWebベースのTODOアプリです。\タスクの追加・編集・削除・完了状態の管理が可能、日々のタスク管理を効率化します。**
+**シンプルなWebベースのTODOアプリです。タスクの追加・編集・削除・完了状態の管理が可能、日々のタスク管理を効率化します。**
 
 ### 機能一覧
 
@@ -17,7 +17,9 @@
 
 ### スクリーンショット
 
-![スクリーンショット](./readme_image/screenshot.png)
+![サインアップページの画像](./readme_image/signup_page.png)
+![ログインページの画像](./readme_image/login_page.png)
+![メインページの画像](./readme_image/main_page.png)
 
 ### デモURL
 
@@ -25,8 +27,9 @@ https://today-s-mission.vercel.app/
 
 ### テストログイン情報
 
-・メールアドレス :123test@test.com\
-・パスワード :123test
+・メールアドレス : 123test@test.com\
+・パスワード : 123test\
+＊ログイン後のユーザー名は『テスト123』と表記されます。
 
 ### 使い方
 
