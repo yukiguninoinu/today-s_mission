@@ -49,7 +49,9 @@ export function Sidebar({
 }
 
 export async function fetchSidebarLists(
-  setLists: React.Dispatch<React.SetStateAction<{ id: string; name: string }[]>>
+  setLists: React.Dispatch<
+    React.SetStateAction<{ id: string; name: string }[]>
+  >,
 ) {
   const {
     data: { session },

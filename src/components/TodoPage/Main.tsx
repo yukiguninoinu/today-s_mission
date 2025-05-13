@@ -67,7 +67,7 @@ export function Main({
     } else {
       // localStateのtodosを更新
       setTodos((prev) =>
-        prev.map((t) => (t.id === todo.id ? { ...t, is_done: updated } : t))
+        prev.map((t) => (t.id === todo.id ? { ...t, is_done: updated } : t)),
       );
     }
   };
@@ -98,7 +98,7 @@ export function Main({
     .filter((todo) => !todo.is_done)
     .sort(
       (a: Todo, b: Todo) =>
-        priorityOrder[b.priority] - priorityOrder[a.priority]
+        priorityOrder[b.priority] - priorityOrder[a.priority],
     );
 
   // 完了したTODOリスト（is_done === true）
