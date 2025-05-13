@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import React, { useEffect } from "react";
 import Style from "./Main.module.css";
 import { supabase } from "../../../lib/supabaseClient";
@@ -12,9 +12,10 @@ type MainProps = {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   selectedListId: string;
   selectedListName: string;
+  setSelectedListName: Dispatch<SetStateAction<string>>;
   setSelectedTodo: (todo: Todo | null) => void;
   deleteList: (listId: string) => void; // リスト削除のための関数
-  refreshLists: () => Promise<void>;
+  fetchLists: () => Promise<void>;
 };
 
 export function Main({
@@ -22,9 +23,10 @@ export function Main({
   setTodos,
   selectedListId,
   selectedListName,
+  setSelectedListName,
   setSelectedTodo,
-  deleteList, // 親から渡されたリスト削除関数
-  refreshLists,
+  deleteList,
+  fetchLists,
 }: MainProps) {
   useEffect(() => {
     if (selectedListId) {
@@ -48,19 +50,6 @@ export function Main({
       setTodos(sortedData || []);
     }
   };
-
-  // TODO削除
-  const handleDeleteTodo = async (id: string) => {
-    const { error } = await supabase.from("todo").delete().eq("id", id);
-    if (error) {
-      console.error("削除失敗:", error.message);
-      return;
-    }
-
-    // 再取得
-    fetchTodos(selectedListId);
-  };
-
   // タスクの完了状態を切り替え
   const handleToggleDone = async (todo: Todo) => {
     const updated = !todo.is_done;
@@ -76,7 +65,7 @@ export function Main({
     } else {
       // localStateのtodosを更新
       setTodos((prev) =>
-        prev.map((t) => (t.id === todo.id ? { ...t, is_done: updated } : t)),
+        prev.map((t) => (t.id === todo.id ? { ...t, is_done: updated } : t))
       );
     }
   };
@@ -88,7 +77,7 @@ export function Main({
 
     if (!confirmDelete) return;
 
-    deleteList(selectedListId);
+    deleteList(selectedListId); // リスト削除関数を呼び出す
   };
 
   const priorityOrder: Record<string, number> = {
@@ -101,7 +90,7 @@ export function Main({
     .filter((todo) => !todo.is_done)
     .sort(
       (a: Todo, b: Todo) =>
-        priorityOrder[b.priority] - priorityOrder[a.priority],
+        priorityOrder[b.priority] - priorityOrder[a.priority]
     );
 
   // 完了したTODOリスト（is_done === true）
@@ -125,7 +114,8 @@ export function Main({
       console.error("タイトル更新エラー:", error.message);
     } else {
       setIsEditing(false);
-      refreshLists();
+      setSelectedListName(editTitle);
+      fetchLists();
     }
   };
 
@@ -134,7 +124,6 @@ export function Main({
       <div className={Style.TodoArea}>
         {/* リスト削除ボタン */}
         <DeleteButton onClick={handleDeleteList} />
-        {/* <h2 className={Style.TodoTitle}>{selectedListName}</h2> */}
         {isEditing ? (
           <div className={Style.EditTitle}>
             <input

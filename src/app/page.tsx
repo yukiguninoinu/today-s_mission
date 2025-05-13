@@ -1,4 +1,5 @@
 "use client";
+
 import { Main } from "@/components/TodoPage/Main";
 import { Sidebar } from "@/components/TodoPage/Sidebar";
 import Style from "./page.module.css";
@@ -79,11 +80,16 @@ export default function TodoPage() {
     }
   };
 
+  useEffect(() => {
+    fetchLists();
+  }, []);
   return (
     <div>
       <Header />
       <div className={Style.MainPage}>
         <Sidebar
+          lists={lists}
+          fetchLists={fetchLists}
           setSelectedListId={setSelectedListId}
           setSelectedListName={setSelectedListName}
         />
@@ -94,7 +100,8 @@ export default function TodoPage() {
           setSelectedTodo={setSelectedTodo}
           deleteList={deleteList}
           selectedListName={selectedListName}
-          refreshLists={fetchLists}
+          setSelectedListName={setSelectedListName}
+          fetchLists={fetchLists}
         />
         <Input
           selectedListId={selectedListId}
