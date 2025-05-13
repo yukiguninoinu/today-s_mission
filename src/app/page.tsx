@@ -1,4 +1,5 @@
 "use client";
+
 import { Main } from "@/components/TodoPage/Main";
 import { Sidebar } from "@/components/TodoPage/Sidebar";
 import Style from "./page.module.css";
@@ -57,7 +58,7 @@ export default function TodoPage() {
     }
 
     console.log("リスト削除成功");
-    // リスト削除後、サイドバーや他のUIを更新する処理を追加する場合もある
+    await fetchLists(); // リストを再取得してUIを更新
   };
 
   const fetchLists = async () => {
@@ -79,11 +80,16 @@ export default function TodoPage() {
     }
   };
 
+  useEffect(() => {
+    fetchLists();
+  }, []);
   return (
     <div>
       <Header />
       <div className={Style.MainPage}>
         <Sidebar
+          lists={lists}
+          fetchLists={fetchLists}
           setSelectedListId={setSelectedListId}
           setSelectedListName={setSelectedListName}
         />
@@ -91,10 +97,12 @@ export default function TodoPage() {
           todos={todos}
           setTodos={setTodos}
           selectedListId={selectedListId}
+          selectedListName={selectedListName}
+          setSelectedListId={setSelectedListId}
           setSelectedTodo={setSelectedTodo}
           deleteList={deleteList}
-          selectedListName={selectedListName}
-          refreshLists={fetchLists}
+          setSelectedListName={setSelectedListName}
+          fetchLists={fetchLists}
         />
         <Input
           selectedListId={selectedListId}
