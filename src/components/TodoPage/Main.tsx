@@ -12,6 +12,7 @@ type MainProps = {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   selectedListId: string;
   selectedListName: string;
+  setSelectedListId: React.Dispatch<React.SetStateAction<string>>;
   setSelectedListName: Dispatch<SetStateAction<string>>;
   setSelectedTodo: (todo: Todo | null) => void;
   deleteList: (listId: string) => void; // リスト削除のための関数
@@ -23,6 +24,7 @@ export function Main({
   setTodos,
   selectedListId,
   selectedListName,
+  setSelectedListId,
   setSelectedListName,
   setSelectedTodo,
   deleteList,
@@ -70,14 +72,20 @@ export function Main({
     }
   };
 
-  const handleDeleteList = () => {
+  const handleDeleteList = async () => {
     if (!selectedListId) return;
 
     const confirmDelete = window.confirm("本当にこのリストを削除しますか？");
 
     if (!confirmDelete) return;
 
-    deleteList(selectedListId); // リスト削除関数を呼び出す
+    await deleteList(selectedListId);
+    await fetchLists; // リスト削除関数を呼び出す
+
+    setSelectedListId(""); // 選択中のリストIDもリセット
+    setSelectedListName(""); // リスト名もリセット
+    setSelectedTodo(null); // 選択中のTODOもリセット
+    setTodos([]); // TODOリストもリセット
   };
 
   const priorityOrder: Record<string, number> = {

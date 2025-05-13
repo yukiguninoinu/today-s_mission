@@ -58,7 +58,7 @@ export default function TodoPage() {
     }
 
     console.log("リスト削除成功");
-    // リスト削除後、サイドバーや他のUIを更新する処理を追加する場合もある
+    await fetchLists(); // リストを再取得してUIを更新
   };
 
   const fetchLists = async () => {
@@ -97,9 +97,10 @@ export default function TodoPage() {
           todos={todos}
           setTodos={setTodos}
           selectedListId={selectedListId}
+          selectedListName={selectedListName}
+          setSelectedListId={setSelectedListId}
           setSelectedTodo={setSelectedTodo}
           deleteList={deleteList}
-          selectedListName={selectedListName}
           setSelectedListName={setSelectedListName}
           fetchLists={fetchLists}
         />
