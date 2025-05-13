@@ -17,3 +17,8 @@
   cursor: pointer;
   border: 1.5px solid #555;
 }
+@media (max-width: 768px) {
+  .button {
+    width: 80%;
+  }
+}
