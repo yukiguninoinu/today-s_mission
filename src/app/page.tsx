@@ -15,6 +15,19 @@ export default function TodoPage() {
   const [selectedListName, setSelectedListName] = useState<string>("");
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const [lists, setLists] = useState<{ id: string; name: string }[]>([]);
+  const [currentView, setCurrentView] = useState<"main" | "sidebar" | "input">(
+    "main",
+  );
+  const [isMobile, setIsMobile] = useState(false);
+  // ✅ ウィンドウ幅によってモバイル判定
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile(); // 初期判定
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleListSelect = (id: string, name: string) => {
     setSelectedListId(id);
@@ -85,9 +98,9 @@ export default function TodoPage() {
   }, []);
   return (
     <div>
-      <Header />
+      <Header setCurrentView={setCurrentView} />
       <div className={Style.MainPage}>
-        <Sidebar
+        {/* <Sidebar
           lists={lists}
           fetchLists={fetchLists}
           setSelectedListId={setSelectedListId}
@@ -109,7 +122,100 @@ export default function TodoPage() {
           onTodoAdded={handleTodoAddedOrUpdated}
           selectedTodo={selectedTodo}
           setSelectedTodo={setSelectedTodo}
-        />
+        /> */}
+
+        {/* {currentView === "sidebar" && (
+          <Sidebar
+            lists={lists}
+            fetchLists={fetchLists}
+            setSelectedListId={setSelectedListId}
+            setSelectedListName={setSelectedListName}
+          />
+        )}
+        {currentView === "main" && (
+          <Main
+            todos={todos}
+            setTodos={setTodos}
+            selectedListId={selectedListId}
+            selectedListName={selectedListName}
+            setSelectedListId={setSelectedListId}
+            setSelectedListName={setSelectedListName}
+            setSelectedTodo={setSelectedTodo}
+            deleteList={deleteList}
+            fetchLists={fetchLists}
+          />
+        )}
+        {currentView === "input" && (
+          <Input
+            selectedListId={selectedListId}
+            onTodoAdded={handleTodoAddedOrUpdated}
+            selectedTodo={selectedTodo}
+            setSelectedTodo={setSelectedTodo}
+          />
+        )}
+      </div>
+    </div> */}
+
+        {isMobile ? (
+          <>
+            {currentView === "sidebar" && (
+              <Sidebar
+                lists={lists}
+                fetchLists={fetchLists}
+                setSelectedListId={setSelectedListId}
+                setSelectedListName={setSelectedListName}
+              />
+            )}
+            {currentView === "main" && (
+              <Main
+                todos={todos}
+                setTodos={setTodos}
+                selectedListId={selectedListId}
+                selectedListName={selectedListName}
+                setSelectedListId={setSelectedListId}
+                setSelectedListName={setSelectedListName}
+                setSelectedTodo={setSelectedTodo}
+                deleteList={deleteList}
+                fetchLists={fetchLists}
+              />
+            )}
+            {currentView === "input" && (
+              <Input
+                selectedListId={selectedListId}
+                onTodoAdded={handleTodoAddedOrUpdated}
+                selectedTodo={selectedTodo}
+                setSelectedTodo={setSelectedTodo}
+              />
+            )}
+          </>
+        ) : (
+          // ✅ PC表示：常に3つ並べる
+          <>
+            <Sidebar
+              lists={lists}
+              fetchLists={fetchLists}
+              setSelectedListId={setSelectedListId}
+              setSelectedListName={setSelectedListName}
+            />
+            <Main
+              todos={todos}
+              setTodos={setTodos}
+              selectedListId={selectedListId}
+              selectedListName={selectedListName}
+              setSelectedListId={setSelectedListId}
+              setSelectedListName={setSelectedListName}
+              setSelectedTodo={setSelectedTodo}
+              deleteList={deleteList}
+              fetchLists={fetchLists}
+            />
+            <Input
+              selectedListId={selectedListId}
+              onTodoAdded={handleTodoAddedOrUpdated}
+              selectedTodo={selectedTodo}
+              setSelectedTodo={setSelectedTodo}
+            />
+          </>
+        )}
       </div>
     </div>
   );
