@@ -69,7 +69,7 @@ export function SignUpForm() {
       />
       <input
         type="password"
-        placeholder="パスワード"
+        placeholder="6文字以上のパスワード"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required

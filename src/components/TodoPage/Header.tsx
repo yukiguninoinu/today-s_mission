@@ -93,17 +93,20 @@ export function Header({ setCurrentView }: HeaderProps) {
       <div className={styles.userArea}>
         {isLoggedIn ? (
           <>
-            <span>こんにちは、{nickname} さん</span>
+            <span className={styles.nickname}>こんにちは、{nickname} さん</span>
             <button onClick={handleLogout}>ログアウト</button>
           </>
         ) : (
           <button onClick={handleGoToLogin}>ログイン</button>
         )}
       </div>
-      {/* サイドバーが開いている場合に表示 */}
+      {/* ハンバーガーメニューが開いている場合に表示 */}
       {menuOpen && (
         <div className={styles.mobileMenu}>
           <ul>
+            {isLoggedIn && (
+              <li className={styles.mobileNickname}>{nickname} さん</li>
+            )}
             {isLoggedIn ? (
               <li onClick={handleLogout}>ログアウト</li>
             ) : (
@@ -132,7 +135,7 @@ export function Header({ setCurrentView }: HeaderProps) {
                 setMenuOpen(false);
               }}
             >
-              NEW TODO
+              追加・編集
             </li>
           </ul>
         </div>
